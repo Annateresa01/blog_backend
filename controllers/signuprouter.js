@@ -2,6 +2,7 @@ const express=require("express")
 const signrouter=require("../models/users")
 const bcrypt=require("bcrypt")
 
+
 const router=express.Router()
 
 hashedpasswordgenerator=async(pass)=>{
@@ -21,7 +22,7 @@ router.post("/user",async(req,res)=>{
         {console.log(hashedpassword)
             data.password=hashedpassword
             console.log(data)
-            let users=new signrouter(data)
+             let users=new signrouter(data)
             let response= users.save()
             res.json(
                 {
@@ -35,4 +36,32 @@ router.post("/user",async(req,res)=>{
 
 })
 
+router.post("/signin",async(req,res)=>{
+let input=req.body
+let emailid=req.body.emailid
+let data=await signrouter.findOne({"emailid":emailid})
+console.log(data)
+let dbpassword=data.password
+let inputpassword=req.body.password
+console.log(dbpassword)
+console.log(inputpassword)
+const match=await bcrypt.compare(inputpassword,dbpassword)
+if(!match)
+{
+ return res.json(
+    {
+        status:"Incorrect"
+    }
+)
+}
+else{
+res.json(
+    {
+        status:"Success"
+    }
+)
+}
+
+
+})
 module.exports=router
