@@ -2,6 +2,7 @@ const express=require("express")
 const cors=require("cors")
 const mongoose=require("mongoose")
 const signuprouter=require("./controllers/signuprouter")
+const postroute=require("./controllers/postrouter")
 
 const app=express()
 
@@ -15,6 +16,7 @@ mongoose.connect("mongodb+srv://anna07:anna@cluster0.a7na4kg.mongodb.net/blogsDb
 )
 
 app.use("/api/blog",signuprouter)
+app.use("/api/posts",postroute)
 
 
 app.listen(3001)
