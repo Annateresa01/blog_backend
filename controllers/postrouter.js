@@ -12,5 +12,11 @@ res.json(
     }
 )
 })
+router.get("/view",async(req,res)=>{
+    let data=await postmodel.find()
+    .populate("userId","name age mobno adrs emailid -_id")
+    .exec()
+    res.json(data)
+})
 
 module.exports=router
