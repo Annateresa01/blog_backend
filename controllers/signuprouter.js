@@ -43,6 +43,13 @@ router.post("/signin",async(req,res)=>{
 let input=req.body
 let emailid=req.body.emailid
 let data=await signrouter.findOne({"emailid":emailid})
+if(!data){
+    return res.json(
+        {
+            status:"invalid emailid"
+        }
+    )
+}
 console.log(data)
 let dbpassword=data.password
 let inputpassword=req.body.password
@@ -60,7 +67,7 @@ if(!match)
 else{
 res.json(
     {
-        status:"Success"
+        status:"Success","userdata":data
     }
 )
 }
