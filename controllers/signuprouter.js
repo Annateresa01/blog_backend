@@ -10,7 +10,10 @@ hashedpasswordgenerator=async(pass)=>{
     return bcrypt.hash(pass,salt)
 
 }
-
+router.get("/viewall",async(req,res)=>{
+    let data=await signrouter.find()
+    res.json(data)
+})
 router.post("/user",async(req,res)=>{
     //let data=req.body
     //let users=new signrouter(data)
